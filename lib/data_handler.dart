@@ -114,19 +114,3 @@ class DataHandler<T> {
     }
   }
 }
-
-checkAPIDataNotNull(DataHandler handler,
-    {Function(DataHandler handler)? onChange}) {
-  if (handler.data != null &&
-      handler.data.toString().isNotEmpty &&
-      handler.data.error == false) {
-    handler.onSuccess(handler.data);
-    onChange?.call(handler);
-  } else if (handler.data == null && handler.data.error == true) {
-    handler.onError(handler.data.message.toString());
-    onChange?.call(handler);
-  } else {
-    handler.onEmpty('No data found');
-    onChange?.call(handler.data);
-  }
-}

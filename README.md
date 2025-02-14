@@ -1,39 +1,97 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# DataHandler ✨🚀🎯
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+`DataHandler` is a lightweight and efficient state management utility for handling API responses in Flutter applications. It simplifies managing different states like loading, success, error, and empty states, making UI updates seamless. 🎯📱🔥
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Features 🎨⚡🛠️
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- Manage API response states easily.
+- Built-in loading, success, error, and empty state handling.
+- Provides flexible widget builders for UI rendering.
+- Works with any data type (`T`).
 
-## Features
+## Installation 📥🔧📌
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Add the following dependency to your `pubspec.yaml` file:
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  data_handler: latest_version # Replace with the latest version
 ```
 
-## Additional information
+Then, run:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```sh
+flutter pub get
+```
+
+## Usage 📚🖥️🎯
+
+### 1. Import the Package 📦✅🔗
+
+```dart
+import 'package:data_handler/data_handler.dart';
+```
+
+### 2. Initialize DataHandler 🎯🎉⚡
+
+```dart
+final handler = DataHandler<String>();
+```
+
+### 3. Manage API Responses 🌍📡⚡
+
+#### Start Loading ⏳🔄🚀
+```dart
+handler.startLoading();
+```
+
+#### On Success 🎉✅📌
+```dart
+handler.onSuccess("Data loaded successfully");
+```
+
+#### On Error ❌⚠️🚨
+```dart
+handler.onError("Something went wrong");
+```
+
+#### On Empty Data 📭⚡🔍
+```dart
+handler.onEmpty("No data available");
+```
+
+### 4. Use `when` for UI Handling 🎭📱🌟
+
+```dart
+Widget build(BuildContext context) {
+  return handler.when(
+    context: context,
+    loadingBuilder: (ctx) => CircularProgressIndicator(),
+    successBuilder: (data) => Text(data),
+    errorBuilder: (error) => Text("Error: $error"),
+    emptyBuilder: (message) => Text("Empty: $message"),
+  );
+}
+```
+
+### 5. Use `whenListWidget` for Lists 📋🗂️⚡
+
+```dart
+List<Widget> buildList(BuildContext context) {
+  return handler.whenListWidget(
+    context: context,
+    loadingBuilder: (ctx) => Center(child: CircularProgressIndicator()),
+    successBuilder: (data) => [Text("Item: $data")],
+    errorBuilder: (error) => [Text("Error: $error")],
+    emptyBuilder: (message) => [Text("No items found")],
+  );
+}
+```
+
+## Contributing 🤝💡🌍
+
+Contributions are welcome! Feel free to open issues or submit pull requests. 🚀✅🎯
+
+## License 📜✅⚖️
+
+This package is licensed under the MIT License. 🔒📄✅
