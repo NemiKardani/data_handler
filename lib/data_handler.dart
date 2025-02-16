@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DataHandler<T> {
+class DataHandler<T> extends ChangeNotifier {
   late bool _isLoading;
   late bool _hasError;
   late bool _hasEmpty;
@@ -38,6 +38,7 @@ class DataHandler<T> {
     _hasError = false;
     _data = null;
     _error = '';
+    notifyListeners();
   }
 
   void onSuccess(T newData) {
@@ -45,6 +46,7 @@ class DataHandler<T> {
     _hasError = false;
     _data = newData;
     _error = '';
+    notifyListeners();
   }
 
   void onError(String errorMessage) {
@@ -52,6 +54,7 @@ class DataHandler<T> {
     _hasError = true;
     _data = null;
     _error = errorMessage;
+    notifyListeners();
   }
 
   void onEmpty(String errorMessage, {bool hasError = true}) {
@@ -61,6 +64,7 @@ class DataHandler<T> {
     _data = null;
     _error = errorMessage;
     _emptyError = errorMessage;
+    notifyListeners();
   }
 
   Widget when({
@@ -70,47 +74,57 @@ class DataHandler<T> {
     Widget Function(String)? errorBuilder,
     Widget Function(String)? emptyBuilder,
   }) {
-    if (_isLoading) {
-      return loadingBuilder?.call(context) ??
-          Center(
-            child: CircularProgressIndicator(),
-          );
-    } else if (_hasError) {
-      return errorBuilder?.call(_error) ?? Text(_error);
-    } else if (_data != null) {
-      return successBuilder.call(_data as T);
-    } else if (_hasEmpty) {
-      return emptyBuilder?.call(_emptyError) ?? Text(_emptyError);
-    } else {
-      return const Text(
-          'No data found'); // You can return a default widget for empty state
-    }
+    return ListenableBuilder(
+      listenable: this,
+      builder: (context, child) {
+        if (_isLoading) {
+          return loadingBuilder?.call(context) ??
+              Center(
+                child: CircularProgressIndicator(),
+              );
+        } else if (_hasError) {
+          return errorBuilder?.call(_error) ?? Text(_error);
+        } else if (_data != null) {
+          return successBuilder.call(_data as T);
+        } else if (_hasEmpty) {
+          return emptyBuilder?.call(_emptyError) ?? Text(_emptyError);
+        } else {
+          return const Text(
+              'No data found'); // You can return a default widget for empty state
+        }
+      },
+    );
   }
 
-  List<Widget> whenListWidget({
+  List<Widget> whenList({
     required BuildContext context,
     Widget Function(BuildContext)? loadingBuilder,
     required List<Widget> Function(T) successBuilder,
     Widget Function(String)? errorBuilder,
     Widget Function(String)? emptyBuilder,
   }) {
-    if (_isLoading) {
-      return [
-        loadingBuilder?.call(context) ??
-            Center(
-              child: CircularProgressIndicator(),
-            )
-      ];
-    } else if (_hasError) {
-      return [errorBuilder?.call(_error) ?? Text(_error)];
-    } else if (_data != null) {
-      return successBuilder.call(_data as T);
-    } else if (_hasEmpty) {
-      return [emptyBuilder?.call(_emptyError) ?? Text(_emptyError)];
-    } else {
-      return [
-        const Text('No data found')
-      ]; // You can return a default widget for empty state
-    }
+    return [
+      ListenableBuilder(
+        listenable: this,
+        builder: (context, child) {
+          if (_isLoading) {
+            return loadingBuilder?.call(context) ??
+                Center(
+                  child: CircularProgressIndicator(),
+                );
+          } else if (_hasError) {
+            return errorBuilder?.call(_error) ?? Text(_error);
+          } else if (_data != null) {
+            return Column(
+              children: successBuilder.call(_data as T),
+            );
+          } else if (_hasEmpty) {
+            return emptyBuilder?.call(_emptyError) ?? Text(_emptyError);
+          } else {
+            return const Text('No data found');
+          }
+        },
+      ),
+    ];
   }
 }
