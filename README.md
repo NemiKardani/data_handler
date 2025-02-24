@@ -106,7 +106,11 @@ List<Widget> buildList(BuildContext context) {
 
 Here's a preview of how `DataHandler` works in a real Flutter app:
 
-![DataHandler Preview](https://your-image-link-here.com/preview.gif)
+### App Preview
+[![bSVbD.gif](https://s3.gifyu.com/images/bSVbD.gif)](https://gifyu.com/image/bSVbD)
+
+### Web Preview
+![DataHandler Preview](https://raw.githubusercontent.com/NemiKardani/data_handler/refs/heads/main/previews/data_handler_web_preview.gif)
 
 ---
 
