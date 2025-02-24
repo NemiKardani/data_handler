@@ -1,5 +1,7 @@
 # DataHandler 🚀✨📦
 
+![Pub Version](https://img.shields.io/pub/v/data_handler) ![License](https://img.shields.io/badge/license-MIT-blue) ![Platform](https://img.shields.io/badge/platform-Flutter-blue)
+
 **Effortless State Management for API Responses in Flutter Apps!** 🎯📱⚡
 
 `DataHandler` is a **lightweight** and **efficient** state management utility designed to handle API responses **seamlessly** across all Flutter platforms (**Android, iOS, Web, Windows, macOS, and Linux**). It simplifies state handling, including **loading, success, error, and empty states**, ensuring a smooth UI experience. 🎉🚀
@@ -100,6 +102,14 @@ List<Widget> buildList(BuildContext context) {
 
 ---
 
+## 📺 Preview
+
+Here's a preview of how `DataHandler` works in a real Flutter app:
+
+![DataHandler Preview](https://your-image-link-here.com/preview.gif)
+
+---
+
 ## 🌍 Cross-Platform Compatibility
 `DataHandler` is fully optimized for **Flutter’s multi-platform capabilities**, ensuring **smooth performance on:**
 
@@ -119,4 +129,3 @@ Feel free to **open issues**, **discuss features**, or **submit pull requests** 
 This package is released under the **MIT License**. 🔓
 
 Enjoy using `DataHandler`? **Give it a ⭐ on GitHub!** 😊🚀
-
