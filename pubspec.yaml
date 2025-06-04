@@ -1,23 +1,27 @@
 name: data_handler
-description: "Handle Data Manage State With GetX and State Management"
-version: 0.0.3
+description: "Refactored architecture with enhanced global configuration for state management and data handling in Flutter applications. This package provides a robust solution for managing API states, including loading, error handling, and data retrieval, while ensuring a clean and maintainable codebase."
+version: 0.0.4
 homepage: 'https://github.com/NemiKardani/data_handler'
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.7.0 <4.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  # GETX
- # get: ^4.6.6
+topics:
+  - flutter data handling
+  - flutter state management
+  - flutter api state management
+  - data
+  - state management
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

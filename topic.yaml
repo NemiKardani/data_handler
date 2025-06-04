@@ -1,0 +1,46 @@
+# Topics for DataHandler Plugin - pub.dev Format
+# Based on canonical topics structure from dart-lang/pub-dev
+# 
+# Note: This is the topics list for your pubspec.yaml file.
+# Use only the canonical topic names (not aliases) for best results.
+
+topics:
+  # Core Flutter/Dart
+  - widget          # Canonical topic for Flutter widgets
+  - dart           # Dart language packages
+  
+  # State Management
+  - state-management
+  - provider       # If using provider pattern
+  - bloc           # Alternative to bloc pattern
+  
+  # Data Handling
+  - data
+  - async
+  - http           # For API data fetching
+  - api
+  
+  # UI States & Error Handling  
+  - loading
+  - error-handling
+  - ui
+  
+  # Architecture & Patterns
+  - architecture
+  - mvvm
+  - clean-code
+  
+  # Performance & Optimization
+  - performance
+  - optimization
+  
+  # Developer Experience
+  - productivity
+  - developer-tools
+  
+  # Testing (if your package supports testing)
+  - testing
+  
+  # Utility
+  - utility
+  - helper
