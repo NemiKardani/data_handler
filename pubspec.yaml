@@ -1,5 +1,5 @@
 name: data_handler
-description: "Refactored architecture with enhanced global configuration for state management and data handling in Flutter applications. This package provides a robust solution for managing API states, including loading, error handling, and data retrieval, while ensuring a clean and maintainable codebase."
+description: "A Flutter package for managing API states, loading, error handling, and data retrieval with enhanced global configuration."
 version: 0.0.5
 homepage: 'https://github.com/NemiKardani/data_handler'
 
