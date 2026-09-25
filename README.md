@@ -147,15 +147,14 @@ void main() {
   runApp(MyApp());
 }
 ```
-new_break_changes_v_0.0.4
+
 Now all your `DataHandler` instances will automatically use these widgets when local ones aren't provided!
-=======
+
 ### App Preview
 [![bSVbD.gif](https://s3.gifyu.com/images/bSVbD.gif)](https://gifyu.com/image/bSVbD)
 
 ### Web Preview
 ![DataHandler Preview](https://raw.githubusercontent.com/NemiKardani/data_handler/refs/heads/main/previews/data_handler_web_preview.gif)
-main
 
 ---
 
@@ -212,6 +211,58 @@ handler.when(
   // ... other callbacks
 );
 ```
+
+### ⚡ Selective Rebuilds (`select`)
+Prevents unnecessary subtree rebuilds when large models mutate. Only rebuilds the specific widget when the selected field changes:
+```dart
+handler.select<int>(
+  selector: (user) => user.unreadCount,
+  builder: (context, count) => BadgeCounter(count),
+);
+```
+
+### ⚡ Debounced Search & Stale Response Killer
+Eliminates out-of-order race conditions and delays execution while user types:
+```dart
+await searchHandler.refresh(
+  () => api.search(query),
+  debounce: const Duration(milliseconds: 300),
+);
+```
+
+### ⚡ Optimistic Updates & Auto-Rollback
+Instantly updates the UI and automatically reverts if the server call fails:
+```dart
+await postHandler.optimisticUpdate(
+  likedPost,
+  action: () => api.likePost(postId),
+  rollbackOnError: true, // Automatically reverts if network throws!
+);
+```
+
+### ⚡ Real-Time Stream Binding
+Binds directly to WebSockets, Firebase, or Supabase streams with leak-free auto-disposal:
+```dart
+chatHandler.bindStream(chatService.messagesStream);
+```
+
+### ⚡ Low-Memory List Pagination
+Directly appends paginated items without cloning large collections in RAM:
+```dart
+listHandler.appendData(nextPageItems);
+```
+
+### 🏢 Team Interceptors & Error Formatter
+Centralized telemetry, auth-token expiry, and exception mapping across all team members:
+```dart
+DataHandlerConfig.setErrorFormatter((error) {
+  if (error is DioException) return error.response?.data['message'] ?? 'Network Error';
+  return error.toString();
+});
+
+DataHandlerConfig.addInterceptor(MyLoggingAndAuthInterceptor());
+```
+
 ---
 
 ## 🌍 Cross-Platform Compatibility
