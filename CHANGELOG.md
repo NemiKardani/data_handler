@@ -1,3 +1,13 @@
+## 0.0.5
+
+### 🚀 Enhancements & Compatibility
+- **Full compatibility with latest Flutter & Dart**: Broadened environment constraints (`sdk: ">=3.0.0 <4.0.0"`, `flutter: ">=3.0.0"`) to guarantee backward compatibility with existing projects while supporting the latest Flutter releases.
+- **Zero breaking changes**: All public APIs and method signatures remain 100% backward compatible.
+- **Swift Package Manager (SPM) Support**: Updated example iOS project to support Swift Package Manager and UIScene lifecycle seamlessly.
+- **Modern Gradle & AGP Upgrade**: Updated example Android project to modern Gradle Kotlin DSL (`.kts`), Gradle 9.3.1, AGP 9.1.0, and Java 17.
+- **Comprehensive Unit & Widget Testing**: Added automated unit and widget test coverage for state transitions, global widget overrides, and list extensions.
+- **Bug Fix**: Guaranteed fallback to default empty message (`'No data available'`) when `onEmpty` builder is invoked without a custom message.
+
 ## 0.0.4
 
 ### 🚨 BREAKING CHANGES

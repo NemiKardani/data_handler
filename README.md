@@ -28,7 +28,7 @@ Add `DataHandler` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  data_handler: ^0.0.4  # Use the latest version
+  data_handler: ^0.0.5  # Use the latest version
 ```
 
 Then, run:

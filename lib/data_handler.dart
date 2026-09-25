@@ -323,16 +323,15 @@ class DataHandler<T> extends ChangeNotifier {
     Widget Function(String message)? onEmpty,
     bool useGlobalWidgets,
   ) {
+    final message = _errorMessage.isEmpty ? 'No data available' : _errorMessage;
     if (onEmpty != null) {
-      return onEmpty(_errorMessage);
+      return onEmpty(message);
     }
     if (useGlobalWidgets && _config.globalEmptyWidget != null) {
-      return _config.globalEmptyWidget!(
-        _errorMessage.isEmpty ? 'No data available' : _errorMessage,
-      );
+      return _config.globalEmptyWidget!(message);
     }
     return Center(
-      child: Text(_errorMessage.isEmpty ? 'No data available' : _errorMessage),
+      child: Text(message),
     );
   }
 
