@@ -1,20 +1,35 @@
 import 'package:data_handler/data_handler.dart';
+import 'package:example/interceptor/logging_interceptor.dart';
 import 'package:example/screen/public_api_screen.dart';
 import 'package:example/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-// Import your enhanced DataHandler here
-// import 'package:data_handler/data_handler.dart';
-
 void main() {
-  // Setup global widgets before running the app
+  // Setup global widgets, error formatting, and team interceptors before running the app
   _setupGlobalWidgets();
   runApp(const MyApp());
 }
 
-/// Setup global widgets for consistent UI across the app
+/// Setup global widgets, error formatting, and team interceptors for consistent UI across the app
 void _setupGlobalWidgets() {
+  // 1. Centralized Team Error Formatter
+  DataHandlerConfig.setErrorFormatter((error) {
+    final errStr = error.toString();
+    if (errStr.contains('SocketException') || errStr.contains('ClientException')) {
+      return 'No internet connection. Please verify your network and retry.';
+    }
+    if (errStr.contains('TimeoutException')) {
+      return 'Request timed out. The server took too long to respond.';
+    }
+    return errStr.replaceFirst('Exception: ', '');
+  });
+
+  // 2. App-wide Interceptor for telemetry and logging
+  DataHandlerConfig.addInterceptor(AppLoggingInterceptor.instance);
+
+  // 3. Global UI Builders
   DataHandlerConfig.setGlobalWidgets(
+
     loadingWidget: () => const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
