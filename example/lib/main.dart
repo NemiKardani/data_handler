@@ -15,7 +15,8 @@ void _setupGlobalWidgets() {
   // 1. Centralized Team Error Formatter
   DataHandlerConfig.setErrorFormatter((error) {
     final errStr = error.toString();
-    if (errStr.contains('SocketException') || errStr.contains('ClientException')) {
+    if (errStr.contains('SocketException') ||
+        errStr.contains('ClientException')) {
       return 'No internet connection. Please verify your network and retry.';
     }
     if (errStr.contains('TimeoutException')) {
@@ -29,7 +30,6 @@ void _setupGlobalWidgets() {
 
   // 3. Global UI Builders
   DataHandlerConfig.setGlobalWidgets(
-
     loadingWidget: () => const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

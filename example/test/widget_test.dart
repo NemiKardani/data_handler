@@ -13,7 +13,8 @@ void main() {
     DataHandlerConfig.addInterceptor(AppLoggingInterceptor.instance);
   });
 
-  testWidgets('DataHandler smoke test in example app', (WidgetTester tester) async {
+  testWidgets('DataHandler smoke test in example app',
+      (WidgetTester tester) async {
     final handler = DataHandler<String>('Test Message');
 
     await tester.pumpWidget(
@@ -29,20 +30,31 @@ void main() {
     expect(find.text('Test Message'), findsOneWidget);
   });
 
-  testWidgets('AppLoggingInterceptor records DataHandler lifecycle events', (WidgetTester tester) async {
+  testWidgets('AppLoggingInterceptor records DataHandler lifecycle events',
+      (WidgetTester tester) async {
     final handler = DataHandler<int>();
 
     handler.startLoading();
-    expect(AppLoggingInterceptor.instance.logsNotifier.value.any((l) => l.eventType == 'onRequest'), isTrue);
+    expect(
+        AppLoggingInterceptor.instance.logsNotifier.value
+            .any((l) => l.eventType == 'onRequest'),
+        isTrue);
 
     handler.onSuccess(42);
-    expect(AppLoggingInterceptor.instance.logsNotifier.value.any((l) => l.eventType == 'onSuccess'), isTrue);
+    expect(
+        AppLoggingInterceptor.instance.logsNotifier.value
+            .any((l) => l.eventType == 'onSuccess'),
+        isTrue);
 
     handler.onError('Failed');
-    expect(AppLoggingInterceptor.instance.logsNotifier.value.any((l) => l.eventType == 'onError'), isTrue);
+    expect(
+        AppLoggingInterceptor.instance.logsNotifier.value
+            .any((l) => l.eventType == 'onError'),
+        isTrue);
   });
 
-  testWidgets('Selective rebuild with select<R>() in example widgets', (WidgetTester tester) async {
+  testWidgets('Selective rebuild with select<R>() in example widgets',
+      (WidgetTester tester) async {
     final handler = DataHandler<List<String>>(['Apple', 'Banana']);
     int rebuildCount = 0;
 
@@ -75,7 +87,8 @@ void main() {
     expect(rebuildCount, 2);
   });
 
-  testWidgets('bindStream and pattern matching maybeWhen in example widgets', (WidgetTester tester) async {
+  testWidgets('bindStream and pattern matching maybeWhen in example widgets',
+      (WidgetTester tester) async {
     final handler = DataHandler<int>();
     final controller = StreamController<int>();
 
@@ -103,7 +116,8 @@ void main() {
     handler.dispose();
   });
 
-  testWidgets('MyApp renders tabs and navigation smoothly', (WidgetTester tester) async {
+  testWidgets('MyApp renders tabs and navigation smoothly',
+      (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
     await tester.pump();
 

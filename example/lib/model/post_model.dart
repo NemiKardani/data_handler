@@ -53,4 +53,3 @@ class Post {
   @override
   int get hashCode => Object.hash(id, isFavorite, title, body);
 }
-

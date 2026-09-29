@@ -172,8 +172,7 @@ class _PublicApiExampleState extends State<PublicApiExample>
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = json.decode(response.body);
-        _cachedFullPosts =
-            jsonData.map((post) => Post.fromJson(post)).toList();
+        _cachedFullPosts = jsonData.map((post) => Post.fromJson(post)).toList();
 
         final initialBatch = _cachedFullPosts.take(_pageSize).toList();
         if (initialBatch.isEmpty) {
@@ -197,12 +196,11 @@ class _PublicApiExampleState extends State<PublicApiExample>
       // Simulate small query processing
       await Future.delayed(const Duration(milliseconds: 100));
 
-      final filtered =
-          _cachedFullPosts.where((post) {
-            return post.title.toLowerCase().contains(q) ||
-                post.body.toLowerCase().contains(q) ||
-                post.id.toString() == q;
-          }).toList();
+      final filtered = _cachedFullPosts.where((post) {
+        return post.title.toLowerCase().contains(q) ||
+            post.body.toLowerCase().contains(q) ||
+            post.id.toString() == q;
+      }).toList();
 
       if (filtered.isEmpty) {
         _dataHandler.onEmpty('No posts matching "$query"');
@@ -247,10 +245,9 @@ class _PublicApiExampleState extends State<PublicApiExample>
     final targetFav = !post.isFavorite;
 
     // Immediately update in memory for 120fps UI responsiveness
-    final optimisticList =
-        currentPosts.map((p) {
-          return p.id == post.id ? p.copyWith(isFavorite: targetFav) : p;
-        }).toList();
+    final optimisticList = currentPosts.map((p) {
+      return p.id == post.id ? p.copyWith(isFavorite: targetFav) : p;
+    }).toList();
 
     HapticFeedback.selectionClick();
 
@@ -274,8 +271,7 @@ class _PublicApiExampleState extends State<PublicApiExample>
 
   Future<void> _deletePost(Post post) async {
     final currentPosts = _dataHandler.data ?? [];
-    final optimisticList =
-        currentPosts.where((p) => p.id != post.id).toList();
+    final optimisticList = currentPosts.where((p) => p.id != post.id).toList();
 
     HapticFeedback.mediumImpact();
 
@@ -310,12 +306,20 @@ class _PublicApiExampleState extends State<PublicApiExample>
     );
 
     _streamTimer = Timer.periodic(const Duration(milliseconds: 1800), (timer) {
-      if (_isStreamPaused || _streamController == null || _streamController!.isClosed) {
+      if (_isStreamPaused ||
+          _streamController == null ||
+          _streamController!.isClosed) {
         return;
       }
 
       _streamSequence++;
-      final categories = ['Analytics', 'Payment', 'User Auth', 'Database', 'Cloud Worker'];
+      final categories = [
+        'Analytics',
+        'Payment',
+        'User Auth',
+        'Database',
+        'Cloud Worker'
+      ];
       final chosenCategory = categories[_streamSequence % categories.length];
 
       final newEvent = StreamEvent(
@@ -361,7 +365,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
   void _simulateError() {
     HapticFeedback.heavyImpact();
     _dataHandler.onError(
-      Exception("Network connection failed. Please check your internet connection."),
+      Exception(
+          "Network connection failed. Please check your internet connection."),
     );
   }
 
@@ -410,12 +415,15 @@ class _PublicApiExampleState extends State<PublicApiExample>
   PreferredSizeWidget _buildAppBar(ThemeData theme) {
     return AppBar(
       elevation: 0,
-      systemOverlayStyle:
-          widget.isDarkMode ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      systemOverlayStyle: widget.isDarkMode
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark,
       title: Text(
         _currentTabIndex == 0
             ? 'Enterprise DataHandler'
-            : (_currentTabIndex == 1 ? 'Live Stream Binding' : 'Team Interceptor'),
+            : (_currentTabIndex == 1
+                ? 'Live Stream Binding'
+                : 'Team Interceptor'),
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
       ),
       actions: [
@@ -423,9 +431,12 @@ class _PublicApiExampleState extends State<PublicApiExample>
           // Sliver vs ListView Toggle
           IconButton(
             icon: Icon(
-              _isSliverMode ? Icons.view_day_rounded : Icons.view_agenda_rounded,
+              _isSliverMode
+                  ? Icons.view_day_rounded
+                  : Icons.view_agenda_rounded,
             ),
-            tooltip: _isSliverMode ? 'Switch to ListView' : 'Switch to SliverList',
+            tooltip:
+                _isSliverMode ? 'Switch to ListView' : 'Switch to SliverList',
             onPressed: () {
               setState(() => _isSliverMode = !_isSliverMode);
             },
@@ -437,8 +448,9 @@ class _PublicApiExampleState extends State<PublicApiExample>
                   ? Icons.travel_explore_rounded
                   : Icons.widgets_outlined,
             ),
-            tooltip:
-                _isUseGlobalWidgets ? 'Using Global Widgets' : 'Using Local Widgets',
+            tooltip: _isUseGlobalWidgets
+                ? 'Using Global Widgets'
+                : 'Using Local Widgets',
             onPressed: () {
               setState(() => _isUseGlobalWidgets = !_isUseGlobalWidgets);
             },
@@ -447,7 +459,9 @@ class _PublicApiExampleState extends State<PublicApiExample>
         // Dark / Light Mode Toggle
         IconButton(
           icon: Icon(
-            widget.isDarkMode ? Icons.light_mode_rounded : Icons.dark_mode_rounded,
+            widget.isDarkMode
+                ? Icons.light_mode_rounded
+                : Icons.dark_mode_rounded,
           ),
           tooltip: widget.isDarkMode ? 'Light Mode' : 'Dark Mode',
           onPressed: () {
@@ -483,7 +497,9 @@ class _PublicApiExampleState extends State<PublicApiExample>
 
         // Main List Content (List or Sliver)
         Expanded(
-          child: _isSliverMode ? _buildSliverContent(theme) : _buildListContent(theme),
+          child: _isSliverMode
+              ? _buildSliverContent(theme)
+              : _buildListContent(theme),
         ),
       ],
     );
@@ -761,7 +777,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
           filled: true,
           fillColor: theme.colorScheme.surface,
           isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide(
@@ -901,12 +918,12 @@ class _PublicApiExampleState extends State<PublicApiExample>
       useGlobalWidgets: _isUseGlobalWidgets,
       onSuccess: (posts) => _buildPostsListView(posts, theme),
       onLoading: !_isUseGlobalWidgets ? () => _buildLoadingState(theme) : null,
-      onError:
-          !_isUseGlobalWidgets ? (error) => _buildErrorState(error, theme) : null,
-      onEmptyList:
-          !_isUseGlobalWidgets
-              ? (empty) => _buildEmptyState(empty, theme)
-              : null,
+      onError: !_isUseGlobalWidgets
+          ? (error) => _buildErrorState(error, theme)
+          : null,
+      onEmptyList: !_isUseGlobalWidgets
+          ? (empty) => _buildEmptyState(empty, theme)
+          : null,
     );
   }
 
@@ -954,14 +971,12 @@ class _PublicApiExampleState extends State<PublicApiExample>
               },
               onLoading:
                   !_isUseGlobalWidgets ? () => _buildLoadingState(theme) : null,
-              onError:
-                  !_isUseGlobalWidgets
-                      ? (error) => _buildErrorState(error, theme)
-                      : null,
-              onEmpty:
-                  !_isUseGlobalWidgets
-                      ? (empty) => _buildEmptyState(empty, theme)
-                      : null,
+              onError: !_isUseGlobalWidgets
+                  ? (error) => _buildErrorState(error, theme)
+                  : null,
+              onEmpty: !_isUseGlobalWidgets
+                  ? (empty) => _buildEmptyState(empty, theme)
+                  : null,
             ),
           ],
         ),
@@ -1079,12 +1094,11 @@ class _PublicApiExampleState extends State<PublicApiExample>
                         post.isFavorite
                             ? Icons.favorite_rounded
                             : Icons.favorite_border_rounded,
-                        color:
-                            post.isFavorite
-                                ? Colors.pinkAccent
-                                : theme.colorScheme.onSurface.withValues(
-                                  alpha: 0.4,
-                                ),
+                        color: post.isFavorite
+                            ? Colors.pinkAccent
+                            : theme.colorScheme.onSurface.withValues(
+                                alpha: 0.4,
+                              ),
                         size: 22,
                       ),
                       tooltip: 'Optimistic Favorite (with rollback)',
@@ -1150,7 +1164,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
           ),
           child: Row(
             children: [
-              Icon(Icons.stream_rounded, color: theme.colorScheme.primary, size: 28),
+              Icon(Icons.stream_rounded,
+                  color: theme.colorScheme.primary, size: 28),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
@@ -1169,7 +1184,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                       'Binds directly to WebSockets or Firebase Streams. Automatic subscription cleanup eliminates memory leaks on dispose.',
                       style: TextStyle(
                         fontSize: 12,
-                        color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        color:
+                            theme.colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -1187,12 +1203,15 @@ class _PublicApiExampleState extends State<PublicApiExample>
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: _toggleStreamPause,
-                  icon: Icon(_isStreamPaused ? Icons.play_arrow_rounded : Icons.pause_rounded),
+                  icon: Icon(_isStreamPaused
+                      ? Icons.play_arrow_rounded
+                      : Icons.pause_rounded),
                   label: Text(_isStreamPaused ? 'Resume' : 'Pause'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.primary,
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),
@@ -1200,11 +1219,14 @@ class _PublicApiExampleState extends State<PublicApiExample>
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: _injectStreamError,
-                  icon: const Icon(Icons.error_outline_rounded, color: Colors.red),
-                  label: const Text('Error', style: TextStyle(color: Colors.red)),
+                  icon: const Icon(Icons.error_outline_rounded,
+                      color: Colors.red),
+                  label:
+                      const Text('Error', style: TextStyle(color: Colors.red)),
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.red),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ),
@@ -1243,12 +1265,15 @@ class _PublicApiExampleState extends State<PublicApiExample>
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundColor: theme.colorScheme.secondary.withValues(alpha: 0.2),
-                        child: Icon(Icons.bolt_rounded, color: theme.colorScheme.secondary),
+                        backgroundColor:
+                            theme.colorScheme.secondary.withValues(alpha: 0.2),
+                        child: Icon(Icons.bolt_rounded,
+                            color: theme.colorScheme.secondary),
                       ),
                       title: Text(
                         event.title,
-                        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 13),
                       ),
                       subtitle: Text(
                         'Category: ${event.category} • ${event.timestamp.toIso8601String().split('T').last.substring(0, 8)}',
@@ -1266,9 +1291,12 @@ class _PublicApiExampleState extends State<PublicApiExample>
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.stream_rounded, size: 48, color: Colors.red),
+                    const Icon(Icons.stream_rounded,
+                        size: 48, color: Colors.red),
                     const SizedBox(height: 12),
-                    Text(err, textAlign: TextAlign.center, style: const TextStyle(color: Colors.red)),
+                    Text(err,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.red)),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
@@ -1309,7 +1337,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
               ),
               child: Row(
                 children: [
-                  Icon(Icons.hub_rounded, color: theme.colorScheme.primary, size: 28),
+                  Icon(Icons.hub_rounded,
+                      color: theme.colorScheme.primary, size: 28),
                   const SizedBox(width: 14),
                   Expanded(
                     child: Column(
@@ -1328,7 +1357,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                           'DataHandlerInterceptor monitors state hooks across your whole codebase. Centralized error formatter formats all exceptions.',
                           style: TextStyle(
                             fontSize: 12,
-                            color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                            color: theme.colorScheme.onSurface
+                                .withValues(alpha: 0.7),
                           ),
                         ),
                       ],
@@ -1344,7 +1374,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                 children: [
                   Text(
                     'Recorded Events (${logs.length})',
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 13),
                   ),
                   Row(
                     children: [
@@ -1352,7 +1383,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                         icon: const Icon(Icons.bolt_rounded, size: 16),
                         label: const Text('Test Formatter'),
                         onPressed: () {
-                          _dataHandler.onError(Exception("TimeoutException: Host took 15000ms"));
+                          _dataHandler.onError(
+                              Exception("TimeoutException: Host took 15000ms"));
                         },
                       ),
                       TextButton.icon(
@@ -1373,7 +1405,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                       child: Text(
                         'No interceptor events recorded yet. Perform actions to see hooks.',
                         style: TextStyle(
-                          color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.5),
                         ),
                       ),
                     )
@@ -1382,7 +1415,11 @@ class _PublicApiExampleState extends State<PublicApiExample>
                       itemCount: logs.length,
                       itemBuilder: (context, index) {
                         final log = logs[index];
-                        final timeStr = log.timestamp.toIso8601String().split('T').last.substring(0, 8);
+                        final timeStr = log.timestamp
+                            .toIso8601String()
+                            .split('T')
+                            .last
+                            .substring(0, 8);
                         final badgeColor = _getHookBadgeColor(log.eventType);
 
                         return Container(
@@ -1392,7 +1429,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                             color: theme.colorScheme.surface,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
-                              color: theme.colorScheme.outline.withValues(alpha: 0.1),
+                              color: theme.colorScheme.outline
+                                  .withValues(alpha: 0.1),
                             ),
                           ),
                           child: Column(
@@ -1401,7 +1439,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                               Row(
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 3),
                                     decoration: BoxDecoration(
                                       color: badgeColor.withValues(alpha: 0.15),
                                       borderRadius: BorderRadius.circular(6),
@@ -1420,7 +1459,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                                     timeStr,
                                     style: TextStyle(
                                       fontSize: 11,
-                                      color: theme.colorScheme.onSurface.withValues(alpha: 0.4),
+                                      color: theme.colorScheme.onSurface
+                                          .withValues(alpha: 0.4),
                                     ),
                                   ),
                                 ],
@@ -1431,7 +1471,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontFamily: 'monospace',
-                                  color: theme.colorScheme.onSurface.withValues(alpha: 0.85),
+                                  color: theme.colorScheme.onSurface
+                                      .withValues(alpha: 0.85),
                                 ),
                               ),
                             ],
@@ -1572,7 +1613,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.cloud_off_rounded, size: 40, color: theme.colorScheme.error),
+              Icon(Icons.cloud_off_rounded,
+                  size: 40, color: theme.colorScheme.error),
               const SizedBox(height: 12),
               Text(
                 'Connection Error',
@@ -1626,51 +1668,51 @@ class _PublicApiExampleState extends State<PublicApiExample>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              color: theme.colorScheme.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(45),
-            ),
-            child: Icon(
-              Icons.inbox_outlined,
-              size: 45,
-              color: theme.colorScheme.primary,
-            ),
-          ),
-          const SizedBox(height: 18),
-          Text(
-            'No Posts Found',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: theme.colorScheme.primary,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              message,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
-                fontSize: 13,
+            Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(45),
+              ),
+              child: Icon(
+                Icons.inbox_outlined,
+                size: 45,
+                color: theme.colorScheme.primary,
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton.icon(
-            onPressed: () => _fetchPosts(preserveData: false),
-            icon: const Icon(Icons.refresh_rounded),
-            label: const Text('Fetch Posts'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.primary,
-              foregroundColor: Colors.white,
+            const SizedBox(height: 18),
+            Text(
+              'No Posts Found',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.primary,
+              ),
             ),
-          ),
-        ],
-      ),
+            const SizedBox(height: 6),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.6),
+                  fontSize: 13,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: () => _fetchPosts(preserveData: false),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Fetch Posts'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.primary,
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1697,17 +1739,17 @@ class _PublicApiExampleState extends State<PublicApiExample>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder:
-          (context) => Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 680),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.65,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.surface,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-                ),
-                child: Column(
+      builder: (context) => Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 680),
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.65,
+            decoration: BoxDecoration(
+              color: theme.colorScheme.surface,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(24)),
+            ),
+            child: Column(
               children: [
                 Container(
                   width: 36,
@@ -1756,14 +1798,16 @@ class _PublicApiExampleState extends State<PublicApiExample>
                                 children: [
                                   Text(
                                     'Post #${post.id}',
-                                    style: theme.textTheme.titleMedium?.copyWith(
+                                    style:
+                                        theme.textTheme.titleMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     'Created by User ${post.userId}',
                                     style: theme.textTheme.bodySmall?.copyWith(
-                                      color: theme.colorScheme.onSurface.withValues(
+                                      color: theme.colorScheme.onSurface
+                                          .withValues(
                                         alpha: 0.6,
                                       ),
                                     ),
@@ -1776,7 +1820,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
                                 post.isFavorite
                                     ? Icons.favorite_rounded
                                     : Icons.favorite_border_rounded,
-                                color: post.isFavorite ? Colors.pinkAccent : null,
+                                color:
+                                    post.isFavorite ? Colors.pinkAccent : null,
                               ),
                               onPressed: () {
                                 _toggleFavorite(post);
@@ -1810,8 +1855,8 @@ class _PublicApiExampleState extends State<PublicApiExample>
               ],
             ),
           ),
-          ),
-          ),
+        ),
+      ),
     );
   }
 

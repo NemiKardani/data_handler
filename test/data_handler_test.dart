@@ -149,7 +149,8 @@ void main() {
       expect(handler.errorMessage, contains('Server failure'));
     });
 
-    test('refresh race condition discards stale out-of-order responses', () async {
+    test('refresh race condition discards stale out-of-order responses',
+        () async {
       final handler = DataHandler<String>();
       final completer1 = Completer<String>();
       final completer2 = Completer<String>();
@@ -173,7 +174,8 @@ void main() {
       expect(handler.data, equals('New Data'));
     });
 
-    test('refresh with debounce delays execution and merges rapid calls', () async {
+    test('refresh with debounce delays execution and merges rapid calls',
+        () async {
       final handler = DataHandler<String>();
       int fetchCount = 0;
 
@@ -200,7 +202,8 @@ void main() {
       expect(handler.data, equals('Search Final'));
     });
 
-    test('optimisticUpdate immediately updates and auto-rolls back on failure', () async {
+    test('optimisticUpdate immediately updates and auto-rolls back on failure',
+        () async {
       final handler = DataHandler<int>(10);
 
       // Successful optimistic action
@@ -225,7 +228,8 @@ void main() {
       expect(handler.errorMessage, contains('Backend validation error'));
     });
 
-    test('bindStream updates state reactively and cancels on dispose', () async {
+    test('bindStream updates state reactively and cancels on dispose',
+        () async {
       final handler = DataHandler<int>();
       final streamController = StreamController<int>();
 
@@ -247,7 +251,9 @@ void main() {
       await streamController.close();
     });
 
-    test('Disposed handler safely ignores subsequent callbacks without throwing', () async {
+    test(
+        'Disposed handler safely ignores subsequent callbacks without throwing',
+        () async {
       final handler = DataHandler<String>();
       final completer = Completer<String>();
 
@@ -295,7 +301,8 @@ void main() {
       final handler = DataHandler<String>();
       handler.onError(Exception('500 Server'));
 
-      expect(handler.errorMessage, equals('CustomFormatted: Exception: 500 Server'));
+      expect(handler.errorMessage,
+          equals('CustomFormatted: Exception: 500 Server'));
     });
   });
 
@@ -360,7 +367,8 @@ void main() {
       expect(find.text('Success: Success data'), findsOneWidget);
     });
 
-    testWidgets('select only rebuilds sub-widget when selected field changes', (tester) async {
+    testWidgets('select only rebuilds sub-widget when selected field changes',
+        (tester) async {
       final handler = DataHandler<_UserModel>(_UserModel('Alice', 5));
       int buildCount = 0;
 
@@ -455,7 +463,8 @@ void main() {
       expect(nullListHandler.data, equals(['first', 'second']));
     });
 
-    testWidgets('whenList renders empty list callback on empty list data', (tester) async {
+    testWidgets('whenList renders empty list callback on empty list data',
+        (tester) async {
       final handler = DataHandler<List<String>>(['item1']);
 
       await tester.pumpWidget(

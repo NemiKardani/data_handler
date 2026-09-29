@@ -18,7 +18,8 @@ class InterceptorLog {
 
 /// Global interceptor demonstrating enterprise team tooling and diagnostics.
 class AppLoggingInterceptor extends DataHandlerInterceptor {
-  static final AppLoggingInterceptor instance = AppLoggingInterceptor._internal();
+  static final AppLoggingInterceptor instance =
+      AppLoggingInterceptor._internal();
   factory AppLoggingInterceptor() => instance;
   AppLoggingInterceptor._internal();
 
@@ -42,12 +43,16 @@ class AppLoggingInterceptor extends DataHandlerInterceptor {
 
   @override
   void onRequest(DataHandler handler) {
-    _addLog('onRequest', 'Handler started loading (current state: ${handler.state.name})', handler.state);
+    _addLog(
+        'onRequest',
+        'Handler started loading (current state: ${handler.state.name})',
+        handler.state);
   }
 
   @override
   void onSuccess(DataHandler handler, dynamic data) {
-    final info = data is List ? '${data.length} items' : data.runtimeType.toString();
+    final info =
+        data is List ? '${data.length} items' : data.runtimeType.toString();
     _addLog('onSuccess', 'Handler succeeded with $info', DataState.success);
   }
 
@@ -57,8 +62,10 @@ class AppLoggingInterceptor extends DataHandlerInterceptor {
   }
 
   @override
-  void onStateChanged(DataHandler handler, DataState oldState, DataState newState) {
-    _addLog('onStateChanged', 'Transitioned: ${oldState.name} ➔ ${newState.name}', newState);
+  void onStateChanged(
+      DataHandler handler, DataState oldState, DataState newState) {
+    _addLog('onStateChanged',
+        'Transitioned: ${oldState.name} ➔ ${newState.name}', newState);
   }
 
   void clearLogs() {

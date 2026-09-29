@@ -150,11 +150,11 @@ void main() {
 
 Now all your `DataHandler` instances will automatically use these widgets when local ones aren't provided!
 
-### App Preview
-[![bSVbD.gif](https://s3.gifyu.com/images/bSVbD.gif)](https://gifyu.com/image/bSVbD)
+### 📱 Mobile Preview
+[![DataHandler Mobile Preview](https://s3.gifyu.com/images/bSVbD.gif)](https://gifyu.com/image/bSVbD)
 
-### Web Preview
-![DataHandler Preview](https://raw.githubusercontent.com/NemiKardani/data_handler/refs/heads/main/previews/data_handler_web_preview.gif)
+### 🖥️ Web Preview
+![DataHandler Web Preview](https://raw.githubusercontent.com/NemiKardani/data_handler/refs/heads/main/previews/data_handler_web_preview.gif)
 
 ---
 

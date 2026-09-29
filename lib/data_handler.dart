@@ -191,8 +191,8 @@ class DataHandler<T> extends ChangeNotifier {
 
   /// Creates a new DataHandler instance with optional initial data
   DataHandler([T? initialData])
-    : _state = initialData != null ? DataState.success : DataState.empty,
-      _data = initialData;
+      : _state = initialData != null ? DataState.success : DataState.empty,
+        _data = initialData;
 
   /// Gets the current data state
   DataState get state => _state;
@@ -281,12 +281,11 @@ class DataHandler<T> extends ChangeNotifier {
   /// Set [preserveData] to true to retain existing data (e.g. during optimistic rollback).
   void onError(dynamic error, {bool preserveData = false}) {
     if (_isDisposed) return;
-    final formattedMessage =
-        error is String
-            ? error
-            : (error is Object
-                ? _config.formatError(error)
-                : error?.toString() ?? 'Unknown error');
+    final formattedMessage = error is String
+        ? error
+        : (error is Object
+            ? _config.formatError(error)
+            : error?.toString() ?? 'Unknown error');
 
     if (_state != DataState.error || _errorMessage != formattedMessage) {
       final oldState = _state;
@@ -417,12 +416,11 @@ class DataHandler<T> extends ChangeNotifier {
       },
       onError: (err) {
         if (!_isDisposed) {
-          final msg =
-              errorFormatter != null
-                  ? errorFormatter(err)
-                  : (err is Object
-                      ? _config.formatError(err)
-                      : err?.toString() ?? 'Stream error');
+          final msg = errorFormatter != null
+              ? errorFormatter(err)
+              : (err is Object
+                  ? _config.formatError(err)
+                  : err?.toString() ?? 'Stream error');
           onError(msg);
         }
       },
@@ -457,14 +455,13 @@ class DataHandler<T> extends ChangeNotifier {
 
     return AnimatedBuilder(
       animation: this,
-      builder:
-          (context, _) => _buildStateWidget(
-            onSuccess: onSuccess,
-            onLoading: onLoading,
-            onError: onError,
-            onEmpty: onEmpty,
-            useGlobalWidgets: useGlobalWidgets,
-          ),
+      builder: (context, _) => _buildStateWidget(
+        onSuccess: onSuccess,
+        onLoading: onLoading,
+        onError: onError,
+        onEmpty: onEmpty,
+        useGlobalWidgets: useGlobalWidgets,
+      ),
     );
   }
 
@@ -485,11 +482,9 @@ class DataHandler<T> extends ChangeNotifier {
       onLoading:
           onLoading ?? () => _config.globalLoadingWidget?.call() ?? orElse(),
       onError:
-          onError ??
-          (err) => _config.globalErrorWidget?.call(err) ?? orElse(),
+          onError ?? (err) => _config.globalErrorWidget?.call(err) ?? orElse(),
       onEmpty:
-          onEmpty ??
-          (msg) => _config.globalEmptyWidget?.call(msg) ?? orElse(),
+          onEmpty ?? (msg) => _config.globalEmptyWidget?.call(msg) ?? orElse(),
     );
   }
 
@@ -798,9 +793,8 @@ extension DataHandlerList<E> on DataHandler<List<E>> {
       onSuccess: (data) => onSuccess(data),
       onLoading: onLoading,
       onError: onError,
-      onEmpty:
-          (message) =>
-              onEmptyList?.call(message) ?? Center(child: Text(message)),
+      onEmpty: (message) =>
+          onEmptyList?.call(message) ?? Center(child: Text(message)),
     );
   }
 }
