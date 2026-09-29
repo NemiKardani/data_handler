@@ -10,14 +10,19 @@
 
 ## 🌟 Features
 
-✅ **Universal Compatibility** – Works across all platforms!  
+✅ **Universal Compatibility** – Works across all platforms (Android, iOS, Web, Windows, macOS, Linux)!  
 ✅ **Smart State Management** – Loading, Success, Error, and Empty states with enum-based tracking  
-✅ **Performance Optimized** – Only rebuilds when state actually changes  
+✅ **Selective Micro-Rebuilds (`select<R>`)** – Granular rebuilds that only trigger when specific model fields mutate  
+✅ **Stale-Response Killer & Debounce** – Discards outdated async responses and prevents search race conditions  
+✅ **Optimistic Updates & Auto-Rollback** – Instant 120fps UI response with automatic reversion on failure  
+✅ **Real-Time Stream Binding (`bindStream`)** – Native WebSockets, Firebase, and Supabase stream binding with auto-disposal  
+✅ **Soft Refresh (`preserveData: true`)** – Background data refresh without blanking UI or screen flickering  
+✅ **Flexible Pattern Matching (`maybeWhen`)** – Render targeted states cleanly with default `orElse` fallback  
+✅ **Low-Memory List Pagination (`appendData`)** – Append items directly without memory-heavy collection cloning  
+✅ **Team Interceptors & Error Formatter** – Enterprise-grade telemetry, audit logging, and centralized exception mapping  
 ✅ **Global Widget Configuration** – Set app-wide defaults for consistent UI  
-✅ **Sliver Support** – Perfect integration with CustomScrollView  
-✅ **List Enhancement** – Specialized handling for list data with empty detection  
-✅ **Works with Any Data Type (`T`)** – Highly versatile and reusable  
-✅ **Modern Architecture** – Built with latest Flutter best practices  
+✅ **Sliver Support (`whenSliverList`)** – Perfect integration with CustomScrollView  
+✅ **Works with Any Data Type (`T`)** – Highly versatile and reusable with zero overhead  
 ✅ **Minimal Setup, Maximum Productivity** – Get started in seconds!
 
 ---
@@ -28,7 +33,7 @@ Add `DataHandler` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  data_handler: ^0.0.4  # Use the latest version
+  data_handler: ^0.0.5  # Use the latest version
 ```
 
 Then, run:
@@ -147,15 +152,14 @@ void main() {
   runApp(MyApp());
 }
 ```
-new_break_changes_v_0.0.4
-Now all your `DataHandler` instances will automatically use these widgets when local ones aren't provided!
-=======
-### App Preview
-[![bSVbD.gif](https://s3.gifyu.com/images/bSVbD.gif)](https://gifyu.com/image/bSVbD)
 
-### Web Preview
-![DataHandler Preview](https://raw.githubusercontent.com/NemiKardani/data_handler/refs/heads/main/previews/data_handler_web_preview.gif)
-main
+Now all your `DataHandler` instances will automatically use these widgets when local ones aren't provided!
+
+### 📱 Mobile Preview
+[![DataHandler Mobile Preview](https://s3.gifyu.com/images/bSVbD.gif)](https://gifyu.com/image/bSVbD)
+
+### 🖥️ Web Preview
+![DataHandler Web Preview](https://raw.githubusercontent.com/NemiKardani/data_handler/refs/heads/main/previews/data_handler_web_preview.gif)
 
 ---
 
@@ -212,6 +216,79 @@ handler.when(
   // ... other callbacks
 );
 ```
+
+### ⚡ Selective Rebuilds (`select`)
+Prevents unnecessary subtree rebuilds when large models mutate. Only rebuilds the specific widget when the selected field changes:
+```dart
+handler.select<int>(
+  selector: (user) => user.unreadCount,
+  builder: (context, count) => BadgeCounter(count),
+);
+```
+
+### ⚡ Debounced Search & Stale Response Killer
+Eliminates out-of-order race conditions and delays execution while user types:
+```dart
+await searchHandler.refresh(
+  () => api.search(query),
+  debounce: const Duration(milliseconds: 300),
+);
+```
+
+### ⚡ Optimistic Updates & Auto-Rollback
+Instantly updates the UI and automatically reverts if the server call fails:
+```dart
+await postHandler.optimisticUpdate(
+  likedPost,
+  action: () => api.likePost(postId),
+  rollbackOnError: true, // Automatically reverts if network throws!
+);
+```
+
+### ⚡ Real-Time Stream Binding
+Binds directly to WebSockets, Firebase, or Supabase streams with leak-free auto-disposal:
+```dart
+chatHandler.bindStream(chatService.messagesStream);
+```
+
+### ⚡ Low-Memory List Pagination
+Directly appends paginated items without cloning large collections in RAM:
+```dart
+listHandler.appendData(nextPageItems);
+```
+
+### 🏢 Team Interceptors & Error Formatter
+Centralized telemetry, auth-token expiry, and exception mapping across all team members:
+```dart
+DataHandlerConfig.setErrorFormatter((error) {
+  if (error is DioException) return error.response?.data['message'] ?? 'Network Error';
+  return error.toString();
+});
+
+DataHandlerConfig.addInterceptor(MyLoggingAndAuthInterceptor());
+```
+
+### 🔄 Soft Refresh (Background Sync Without Blanking)
+Keep existing data on-screen during pull-to-refresh without showing a jarring full-screen loading indicator:
+```dart
+await handler.refresh(
+  () => api.fetchFeed(),
+  preserveData: true, // Retains existing data on screen while fetching updates
+);
+```
+
+### 🎭 Flexible Pattern Matching (`maybeWhen`)
+Render only the specific states you care about with a clean `orElse` fallback:
+```dart
+Widget build(BuildContext context) {
+  return handler.maybeWhen(
+    onLoading: () => const ShimmerPlaceholder(),
+    onSuccess: (data) => FeedList(data),
+    orElse: () => const SizedBox.shrink(),
+  );
+}
+```
+
 ---
 
 ## 🌍 Cross-Platform Compatibility

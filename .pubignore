@@ -1,0 +1,7 @@
+# Previews and assets hosted remotely
+previews/
+
+# Tooling and configuration
+.fvm/
+.vscode/
+.idea/

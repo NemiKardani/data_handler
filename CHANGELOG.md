@@ -1,3 +1,25 @@
+## 0.0.5
+
+### 🚀 Enhancements, Performance & Enterprise Architecture
+- **Stale-Response Killer & Generation Tokens**: Automatically discards outdated in-flight async responses when multiple calls or rapid searches take place, preventing race conditions.
+- **Leak-Proof Disposal Guard**: Safely suppresses callbacks on disposed handlers to eliminate memory leaks and `FlutterError: A DataHandler was used after being disposed`.
+- **Soft Refresh (`preserveData: true`)**: Added background refresh mode to keep existing data on-screen during pull-to-refresh without blanking or UI flicker.
+- **Built-in Debounce**: Added `debounce: Duration` to `refresh()` to optimize search inputs and prevent flooding network/memory with concurrent requests.
+- **Optimistic Updates & Auto-Rollback**: Added `optimisticUpdate()` for 60/120fps instantaneous UI updates with automatic state rollback on error.
+- **Real-Time Stream Binding (`bindStream`)**: Seamlessly connects to WebSockets, Firebase, or Supabase streams with automatic subscription tracking and leak-free disposal.
+- **Selective Micro-Rebuilds (`select<R>`)**: Adds granular subtree rebuilding so widgets only redraw when their specific selected field mutates, drastically saving CPU and RAM.
+- **Flexible Pattern Matching (`maybeWhen`)**: Renders only desired states while providing an `orElse` fallback.
+- **Low-Memory List Pagination (`appendData`)**: Directly appends items to existing collections with zero unnecessary intermediate list cloning.
+- **Team Interceptors & Error Formatter**: Added `DataHandlerInterceptor` and `DataHandlerConfig.setErrorFormatter` for app-wide auth handling, telemetry, and exception mapping.
+- **Swift Package Manager (SPM) Support**: Updated example iOS project to support Swift Package Manager and UIScene lifecycle seamlessly.
+- **Modern Gradle & AGP Upgrade**: Updated example Android project to modern Gradle Kotlin DSL (`.kts`), Gradle 9.3.1, AGP 9.1.0, and Java 17.
+- **Comprehensive Unit & Widget Testing**: 20 automated tests covering state transitions, concurrency, streams, selective rebuilds, and memory disposal safety.
+- **Zero Breaking Changes**: 100% backward compatible with existing consumers.
+- **Interactive Web Preview & Documentation**: Added high-definition web preview demonstration GIF and comprehensive documentation for all new enterprise patterns.
+- **Example App Modernization**: Fully revamped multi-platform example showcasing debounced search, streaming telemetry, optimistic updates, and dark/light theming.
+- **Package Archive & Pub.dev Optimization**: Added `repository` and `issue_tracker` URLs to `pubspec.yaml` and introduced `.pubignore` for ultra-compact package archive distribution.
+- **Bug Fix**: Guaranteed fallback to default empty message (`'No data available'`) when `onEmpty` builder is invoked without a custom message.
+
 ## 0.0.4
 
 ### 🚨 BREAKING CHANGES

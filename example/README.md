@@ -1,16 +1,29 @@
-# example
+# DataHandler Example 🚀
 
-A new Flutter project.
+This sample demonstrates all the enterprise capabilities of **DataHandler** across platforms (Mobile, Desktop, and Web).
 
-## Getting Started
+## 🖥️ Web Preview
 
-This project is a starting point for a Flutter application.
+![DataHandler Web Preview](../previews/data_handler_web_preview.gif)
 
-A few resources to get you started if this is your first Flutter project:
+## 🌟 Featured Demonstrations
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Smart State Management**: Dynamic transitions across `Loading`, `Success`, `Error`, and `Empty` states.
+- **Selective Micro-Rebuilds (`select<R>`)**: Zero-overhead widget updates when model fields mutate.
+- **Low-Memory Pagination (`appendData`)**: High-performance infinite scrolling without cloning large lists in memory.
+- **Debounced Search & Stale Response Killer**: Prevents out-of-order race conditions when users search.
+- **Optimistic Updates & Auto-Rollback**: Instant 120fps UI response with automatic error recovery.
+- **Real-Time Stream Binding (`bindStream`)**: Connects directly to WebSockets or streams with leak-free auto-disposal.
+- **Team Interceptors & Error Formatter**: Centralized telemetry, logging, and error mapping.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Running the Example
+
+### Run in Web
+```sh
+flutter run -d chrome
+```
+
+### Run in Mobile / Desktop
+```sh
+flutter run
+```
