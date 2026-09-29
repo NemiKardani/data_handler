@@ -10,14 +10,19 @@
 
 ## 🌟 Features
 
-✅ **Universal Compatibility** – Works across all platforms!  
+✅ **Universal Compatibility** – Works across all platforms (Android, iOS, Web, Windows, macOS, Linux)!  
 ✅ **Smart State Management** – Loading, Success, Error, and Empty states with enum-based tracking  
-✅ **Performance Optimized** – Only rebuilds when state actually changes  
+✅ **Selective Micro-Rebuilds (`select<R>`)** – Granular rebuilds that only trigger when specific model fields mutate  
+✅ **Stale-Response Killer & Debounce** – Discards outdated async responses and prevents search race conditions  
+✅ **Optimistic Updates & Auto-Rollback** – Instant 120fps UI response with automatic reversion on failure  
+✅ **Real-Time Stream Binding (`bindStream`)** – Native WebSockets, Firebase, and Supabase stream binding with auto-disposal  
+✅ **Soft Refresh (`preserveData: true`)** – Background data refresh without blanking UI or screen flickering  
+✅ **Flexible Pattern Matching (`maybeWhen`)** – Render targeted states cleanly with default `orElse` fallback  
+✅ **Low-Memory List Pagination (`appendData`)** – Append items directly without memory-heavy collection cloning  
+✅ **Team Interceptors & Error Formatter** – Enterprise-grade telemetry, audit logging, and centralized exception mapping  
 ✅ **Global Widget Configuration** – Set app-wide defaults for consistent UI  
-✅ **Sliver Support** – Perfect integration with CustomScrollView  
-✅ **List Enhancement** – Specialized handling for list data with empty detection  
-✅ **Works with Any Data Type (`T`)** – Highly versatile and reusable  
-✅ **Modern Architecture** – Built with latest Flutter best practices  
+✅ **Sliver Support (`whenSliverList`)** – Perfect integration with CustomScrollView  
+✅ **Works with Any Data Type (`T`)** – Highly versatile and reusable with zero overhead  
 ✅ **Minimal Setup, Maximum Productivity** – Get started in seconds!
 
 ---
@@ -261,6 +266,27 @@ DataHandlerConfig.setErrorFormatter((error) {
 });
 
 DataHandlerConfig.addInterceptor(MyLoggingAndAuthInterceptor());
+```
+
+### 🔄 Soft Refresh (Background Sync Without Blanking)
+Keep existing data on-screen during pull-to-refresh without showing a jarring full-screen loading indicator:
+```dart
+await handler.refresh(
+  () => api.fetchFeed(),
+  preserveData: true, // Retains existing data on screen while fetching updates
+);
+```
+
+### 🎭 Flexible Pattern Matching (`maybeWhen`)
+Render only the specific states you care about with a clean `orElse` fallback:
+```dart
+Widget build(BuildContext context) {
+  return handler.maybeWhen(
+    onLoading: () => const ShimmerPlaceholder(),
+    onSuccess: (data) => FeedList(data),
+    orElse: () => const SizedBox.shrink(),
+  );
+}
 ```
 
 ---

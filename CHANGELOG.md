@@ -15,6 +15,9 @@
 - **Modern Gradle & AGP Upgrade**: Updated example Android project to modern Gradle Kotlin DSL (`.kts`), Gradle 9.3.1, AGP 9.1.0, and Java 17.
 - **Comprehensive Unit & Widget Testing**: 20 automated tests covering state transitions, concurrency, streams, selective rebuilds, and memory disposal safety.
 - **Zero Breaking Changes**: 100% backward compatible with existing consumers.
+- **Interactive Web Preview & Documentation**: Added high-definition web preview demonstration GIF and comprehensive documentation for all new enterprise patterns.
+- **Example App Modernization**: Fully revamped multi-platform example showcasing debounced search, streaming telemetry, optimistic updates, and dark/light theming.
+- **Package Archive & Pub.dev Optimization**: Added `repository` and `issue_tracker` URLs to `pubspec.yaml` and introduced `.pubignore` for ultra-compact package archive distribution.
 - **Bug Fix**: Guaranteed fallback to default empty message (`'No data available'`) when `onEmpty` builder is invoked without a custom message.
 
 ## 0.0.4
